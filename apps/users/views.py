@@ -1,19 +1,18 @@
-from ninja import NinjaAPI
-from .schemas import UserIn
-from django.contrib.auth.models import User
+from .schemas import UserIn, UserOut
 from ninja import Router
+from ninja.security import HttpBearer
+from . import services
 
-# class AuthBearer(HttpBearer):
-#     def authenticate(self, request, token):
-#         if token == "supersecret":
-#             return token
+
+class AuthBearer(HttpBearer):
+    def authenticate(self, request, token):
+        if token == "supersecret":
+            return token
 
 
 user_router = Router(tags=["users"])
 
 
-@user_router.post("/login")
+@user_router.post("/login", response=UserOut)
 def login(request, user: UserIn):
-    pass
-    # User.objects.create_user(**user.dict())
-    # return {"token": request.auth}
+    return services.login_user(request, user)

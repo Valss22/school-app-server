@@ -2,6 +2,12 @@ from pydantic import BaseModel
 
 
 class UserIn(BaseModel):
-    firstname: str
-    lastname: str
+    first_name: str
+    last_name: str
     password: str
+
+
+class UserOut(BaseModel):
+    id: int
+    first_name: str
+    last_name: str
