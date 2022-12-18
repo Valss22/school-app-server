@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from apps.users.views import user_router
+from apps.user.views import user_router
 from ninja import NinjaAPI
 
 api = NinjaAPI()
