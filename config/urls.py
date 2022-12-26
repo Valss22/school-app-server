@@ -5,5 +5,5 @@ from apps.user import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/login/", views.login),
+    path("api/user/register/", views.register),
 ]

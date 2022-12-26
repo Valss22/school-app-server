@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework.request import Request
+from . import services
 
 
 @api_view(["POST"])
-def login(request):
-    # do something
-    return Response({"message": "login success"})
+def register(request: Request):
+    return services.create_user(request)
