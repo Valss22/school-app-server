@@ -12,5 +12,5 @@ def check_user_in_db(request: Request):
 
 
 def create_user(request: Request):
-    pass
+    return Response({"msg": "ok"})
     ##User.objects.create_user(**request.data)
