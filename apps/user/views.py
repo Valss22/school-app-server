@@ -1,20 +1,16 @@
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from . import services
-from typing import TypedDict
 
 
-class UserIn(TypedDict):
-    first_name: str
-    last_name: str
-    password: str
-
-
-def request_validator(schema):
+def request_validator(schema: dict):
     def inner(func):
         def wrapper(request: Request):
-            print(schema)
-            print(request.data)
+            for (schema_key, schema_type_key), (data_key, data_value) in zip(
+                schema.items(), request.data.items()
+            ):
+                if schema_key != data_key or schema_type_key is not type(data_value):
+                    raise TypeError
             return func(request)
 
         return wrapper
@@ -23,6 +19,11 @@ def request_validator(schema):
 
 
 @api_view(["POST"])
-@request_validator(UserIn)
+@request_validator(
+    {
+        "name": str,
+        "age": int,
+    }
+)
 def register(request: Request):
     return services.create_user(request)
